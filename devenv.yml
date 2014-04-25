@@ -1,0 +1,19 @@
+---
+# This playbook sets up a development environment for Django development
+# It installs needed python tools, Compass tool chain and selected django additions
+# it creates a project named after the variable
+ - hosts: all
+   vars:
+     delete_default_vhost: yes
+   vars_prompt:
+     project_name: "What is the name of your project?"
+
+   tasks:
+     - include: tasks/setup-nginx.yml
+     - include: tasks/setup-postgres.yml
+     - include: tasks/setup-uwsgi.yml
+     - include: tasks/setup-devtools.yml
+     - include: tasks/create-project.yml
+
+   handlers:
+     - include: handlers/handlers.yml 
